@@ -10,15 +10,18 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Run node api
 ```
-npm run build
+cd server
 ```
-
-### Lints and fixes files
 ```
-npm run lint
+node app.js
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run python api for training & predictions
+```
+cd server
+```
+```
+python api.py
+```
