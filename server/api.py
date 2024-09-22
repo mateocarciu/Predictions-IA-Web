@@ -1,92 +1,77 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
-
 from sklearn.model_selection import train_test_split
-
 from loguru import logger
 import uvicorn
 import numpy as np
 import pandas as pd
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
-# Initialisation de FastAPI
 app = FastAPI()
 
-# Définition d'un modèle pour les données d'entrée
+# Ajouter le middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permettre toutes les origines, remplace "*" par une liste d'origines spécifiques si nécessaire
+    allow_credentials=True,
+    allow_methods=["*"],  # Permettre toutes les méthodes (GET, POST, etc.)
+    allow_headers=["*"],  # Permettre tous les en-têtes
+)
+
+
+
+# Définition des modèles pour les données d'entrée
 class PredictionData(BaseModel):
     surface: float
 
-
-# Définition d'un modèle pour les données d'entrée
 class PredictionDataAppartement(BaseModel):
     surface: float
     nbRooms: float
     nbWindows: float
     price: float
 
-# Initialisation du modèle de régression linéaire
+# Initialisation des modèles
 model = LinearRegression()
-
-
-# Initialisation du modèle de régression linéaire
 modelSecond = LogisticRegression(max_iter=200)
-
-
-# Initialisation du modèle de régression linéaire
 modelThird = KNeighborsClassifier(n_neighbors=5)
 
-# Utilisation cohérente de l'encodeur : L'encodeur label_encoder que vous avez utilisé pour transformer les catégories lors de l'entraînement doit être réutilisé pour inverser cette transformation lors de la prédiction.
 label_encoder = LabelEncoder()
-
-
-
-# Variable pour vérifier si le modèle est entraîné
 is_model_trained = False
-
-# Endpoint pour entraîner le modèle
-
 
 @app.post("/train")
 async def train():
     global is_model_trained
 
     # Lire le fichier CSV
-    df = pd.read_csv('appartements.csv')
+    df = pd.read_csv('appartementsTraining.csv')
 
-    # Extraction des variables indépendantes et dépendantes
-    X = df[['surface']]  # Variable explicative (surface)
-    y = df['price']  # Variable cible (prix)
+    # Extraction des variables pour le modèle de prix
+    X_price = df[['surface']]
+    y_price = df['price']
 
-    # Entraînement du modèle
-    model.fit(X, y)
-    
-    bins = [0, 150000, 250000, 400000, float('inf')]  # Example thresholds
-    labels = ['low', 'normal', 'high', 'scam']  # Classes
+    # Entraînement du modèle de prix
+    model.fit(X_price, y_price)
+
+    # Catégorisation du prix
+    bins = [0, 150000, 250000, 400000, float('inf')]
+    labels = ['low', 'normal', 'high', 'scam']
     df['price_category'] = pd.cut(df['price'], bins=bins, labels=labels)
 
+    # Extraction des variables pour le modèle de classification
+    X_category = df[['nbRooms', 'surface', 'nbWindows', 'price']]
+    y_category = df['price_category']
 
-    X = df[['nbRooms', 'surface', 'nbWindows', 'price']]  # Features
-    y = df['price_category']  # Target variable
-
-    # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+    # Séparation des données
+    X_train_cat, X_test_cat, y_train_cat, y_test_cat = train_test_split(X_category, y_category, test_size=0.2, random_state=42)
     
+    # Entraînement du modèle de catégorie
+    modelSecond.fit(X_train_cat, y_train_cat)
 
-
-    # Train the model
-    modelSecond.fit(X_train, y_train)
-
-    # Marquer le modèle comme entraîné
-    is_model_trained = True
-
-    # Logging avec Loguru
-    logger.info("Modèle entraîné avec succès.")
-    logger.info(f"Coefficients: {model.coef_}, Intercept: {model.intercept_}")
-
+    # Fonction pour classifier par type d'appartement
     def classify_apartment_by_surface(surface):
         if surface < 40:
             return 'F1'
@@ -98,72 +83,56 @@ async def train():
             return 'F4'
 
     df['apartment_type'] = df['surface'].apply(classify_apartment_by_surface)
+    df['apartment_type_encoded'] = label_encoder.fit_transform(df['apartment_type'])
 
-    # Encodage des catégories F1, F2, F3, F4
-    df['apartment_type_encoded'] = label_encoder.fit_transform(
-        df['apartment_type'])
+    # Extraction pour le modèle KNN
+    X_type = df[['surface']]
+    y_type = df['apartment_type_encoded']
 
-    # Extraction des variables indépendantes (surface et prix) et dépendante (type d'appartement)
-    X = df[['surface',]]  # Variables explicatives
-    y = df['apartment_type_encoded']  # Variable cible (F1, F2, F3, F4)
-
-    # Diviser les données en ensembles d'entraînement et de test
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+    # Séparation des données
+    X_train_type, X_test_type, y_train_type, y_test_type = train_test_split(X_type, y_type, test_size=0.2, random_state=42)
     
-    modelThird.fit(X_train, y_train)
+    # Entraînement du modèle KNN
+    modelThird.fit(X_train_type, y_train_type)
 
+    # Marquer le modèle comme entraîné
+    is_model_trained = True
+    logger.info("Modèles entraînés avec succès.")
 
-    return {"message": "Modèle entraîné avec succès."}
-
-# Endpoint pour prédire un prix en fonction des données d'entrée
-
+    return {"message": "Modèles entraînés avec succès."}
 
 @app.post("/predict")
 async def predict(data: PredictionData):
-    global is_model_trained
-
-    # Vérifier si le modèle a été entraîné
     if not is_model_trained:
-        raise HTTPException(
-            status_code=400, detail="Le modèle n'est pas encore entraîné. Veuillez entraîner le modèle d'abord.")
+        raise HTTPException(status_code=400, detail="Le modèle n'est pas encore entraîné.")
 
     X_new = np.array([[data.surface]])
-
-    # Prédire le prix
     predicted_price = model.predict(X_new)[0]
 
-    # Logging avec Loguru
-    logger.info(f"Prédiction faite pour surface: {data.surface}")
-    logger.info(f"Prix prédit: {predicted_price}")
-
+    logger.info(f"Prédiction faite pour surface: {data.surface}, Prix prédit: {predicted_price}")
     return {"predicted_price": predicted_price}
-
 
 @app.post("/predict-category")
-async def predictcategory(data: PredictionDataAppartement):
-    X_new = np.array([[data.surface, data.nbRooms, data.nbWindows, data.price],])
+async def predict_category(data: PredictionDataAppartement):
+    if not is_model_trained:
+        raise HTTPException(status_code=400, detail="Le modèle n'est pas encore entraîné.")
 
-    # Prédire le prix
-    predicted_price = modelSecond.predict(X_new)[0]
+    X_new = np.array([[data.nbRooms, data.surface, data.nbWindows, data.price]])
+    predicted_category = modelSecond.predict(X_new)[0]
 
-    # Logging avec Loguru
-    logger.info(f"Prédiction faite pour surface: {data.surface}")
-    logger.info(f"Prix prédit: {predicted_price}")
-
-    return {"predicted_price": predicted_price}
-
+    logger.info(f"Prédiction de la catégorie pour surface: {data.surface}, Catégorie prédite: {predicted_category}")
+    return {"predicted_category": predicted_category}
 
 @app.post("/predict-type")
-async def predictype(data: PredictionData):
-    X_new = np.array(
-        [[data.surface],])
+async def predict_type(data: PredictionData):
+    if not is_model_trained:
+        raise HTTPException(status_code=400, detail="Le modèle n'est pas encore entraîné.")
 
-  
+    X_new = np.array([[data.surface]])
     predicted_type_encoded = modelThird.predict(X_new)[0]
-    predicted_type = label_encoder.inverse_transform(
-        [predicted_type_encoded])[0]
+    predicted_type = label_encoder.inverse_transform([predicted_type_encoded])[0]
 
+    logger.info(f"Prédiction du type pour surface: {data.surface}, Type prédite: {predicted_type}")
     return {"predicted_type": predicted_type}
 
 if __name__ == "__main__":

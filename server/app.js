@@ -75,6 +75,23 @@ app.post('/api/appartements', async (req, res) => {
   res.status(201).json(appartements);
 });
 
+// Route pour supprimer un appartement
+app.delete('/api/appartements/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  // Lire les appartements existants
+  const appartements = readAppartementsFromFile();
+
+  // Retirer l'appartement avec l'ID spécifié
+  const updatedAppartements = appartements.filter((appartement) => appartement.id !== id);
+
+  // Écrire la nouvelle liste dans le fichier JSON
+  await writeAppartementsToFile(updatedAppartements);
+
+  // Retourner la liste des appartements mise à jour
+  res.json(updatedAppartements);
+});
+
 // Démarrer le serveur
 app.listen(PORT, () => {
   console.log(`Serveur en écoute sur http://localhost:${PORT}`);

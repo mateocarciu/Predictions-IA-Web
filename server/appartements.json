@@ -1,107 +1,181 @@
 [
   {
-    "nbRooms": 4,
-    "surface": 10,
-    "nbWindows": 3,
-    "price": 100000,
-    "id": 1
+    "id": 1,
+    "nbRooms": "4",
+    "surface": "75",
+    "nbWindows": "10",
+    "price": "250000",
+    "year": 2022,
+    "balcony": true,
+    "garage": true,
+    "city": "Paris",
+    "actions": ""
   },
   {
-    "nbRooms": 4,
-    "surface": 12,
-    "nbWindows": 3,
-    "price": 100000,
-    "id": 2
+    "id": 2,
+    "nbRooms": "3",
+    "surface": "65",
+    "nbWindows": "5",
+    "price": "210000",
+    "year": 2021,
+    "balcony": false,
+    "garage": false,
+    "city": "Lyon",
+    "actions": ""
   },
   {
-    "nbRooms": 4,
-    "surface": 15,
-    "nbWindows": 3,
-    "price": 100000,
-    "id": 3
+    "id": 3,
+    "nbRooms": "5",
+    "surface": "120",
+    "nbWindows": "12",
+    "price": "450000",
+    "year": 2019,
+    "balcony": true,
+    "garage": true,
+    "city": "Marseille",
+    "actions": ""
   },
   {
-    "nbRooms": 4,
-    "surface": "15",
+    "id": 4,
+    "nbRooms": "2",
+    "surface": "40",
+    "nbWindows": "3",
+    "price": "120000",
+    "year": 2023,
+    "balcony": false,
+    "garage": false,
+    "city": "Paris",
+    "actions": ""
+  },
+  {
+    "id": 5,
+    "nbRooms": "3",
+    "surface": "80",
+    "nbWindows": "7",
+    "price": "300000",
+    "year": 2020,
+    "balcony": true,
+    "garage": true,
+    "city": "Lyon",
+    "actions": ""
+  },
+  {
+    "id": 6,
+    "nbRooms": "5",
+    "surface": "150",
+    "nbWindows": "15",
+    "price": "600000",
+    "year": 2018,
+    "balcony": false,
+    "garage": true,
+    "city": "Marseille",
+    "actions": ""
+  },
+  {
+    "id": 7,
+    "nbRooms": "4",
+    "surface": "90",
+    "nbWindows": "8",
+    "price": "350000",
+    "year": 2015,
+    "balcony": true,
+    "garage": false,
+    "city": "Paris",
+    "actions": ""
+  },
+  {
+    "id": 8,
+    "nbRooms": "3",
+    "surface": "50",
+    "nbWindows": "4",
+    "price": "180000",
+    "year": 2022,
+    "balcony": false,
+    "garage": true,
+    "city": "Lyon",
+    "actions": ""
+  },
+  {
+    "id": 9,
+    "nbRooms": "4",
+    "surface": "100",
+    "nbWindows": "9",
+    "price": "400000",
+    "year": 2021,
+    "balcony": true,
+    "garage": true,
+    "city": "Marseille",
+    "actions": ""
+  },
+  {
+    "id": 10,
+    "nbRooms": "2",
+    "surface": "55",
+    "nbWindows": "6",
+    "price": "200000",
+    "year": 2016,
+    "balcony": true,
+    "garage": false,
+    "city": "Paris",
+    "actions": ""
+  },
+  {
+    "id": 11,
+    "nbRooms": "1",
+    "surface": "30",
     "nbWindows": "2",
-    "price": 100000,
-    "id": 1725972975351
+    "price": "90000",
+    "year": 2020,
+    "balcony": false,
+    "garage": false,
+    "city": "Lyon",
+    "actions": ""
   },
   {
-    "id": 1726947958291,
-    "nbRooms": 4,
-    "surface": 20,
-    "nbWindows": 3,
-    "price": 100000
+    "id": 12,
+    "nbRooms": "5",
+    "surface": "110",
+    "nbWindows": "11",
+    "price": "500000",
+    "year": 2017,
+    "balcony": true,
+    "garage": true,
+    "city": "Marseille",
+    "actions": ""
   },
   {
-    "id": 1726947960049,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
+    "id": 13,
+    "nbRooms": "4",
+    "surface": "45",
+    "nbWindows": "4",
+    "price": "160000",
+    "year": 2021,
+    "balcony": false,
+    "garage": true,
+    "city": "Paris",
+    "actions": ""
   },
   {
-    "id": 1726947962006,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
+    "id": 14,
+    "nbRooms": "3",
+    "surface": "70",
+    "nbWindows": "5",
+    "price": "250000",
+    "year": 2019,
+    "balcony": true,
+    "garage": false,
+    "city": "Lyon",
+    "actions": ""
   },
   {
-    "id": 1726947999712,
-    "nbRooms": "7777",
-    "surface": 20,
-    "nbWindows": 3,
-    "price": 100000
-  },
-  {
-    "id": 1726948003998,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
-  },
-  {
-    "id": 1726948004354,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
-  },
-  {
-    "id": 1726948004538,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
-  },
-  {
-    "id": 1726948004713,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
-  },
-  {
-    "id": 1726950382043,
-    "nbRooms": 4,
-    "surface": 20,
-    "nbWindows": 3,
-    "price": 100000
-  },
-  {
-    "id": 1726950382767,
-    "nbRooms": 0,
-    "surface": 0,
-    "nbWindows": 0,
-    "price": 0
-  },
-  {
-    "id": 1726950392549,
-    "nbRooms": "12321",
-    "surface": 20,
-    "nbWindows": 3,
-    "price": 100000
+    "id": 15,
+    "nbRooms": "5",
+    "surface": "130",
+    "nbWindows": "10",
+    "price": "550000",
+    "year": 2018,
+    "balcony": true,
+    "city": "Marseille",
+    "actions": ""
   }
 ]
