@@ -1,0 +1,107 @@
+[
+  {
+    "nbRooms": 4,
+    "surface": 10,
+    "nbWindows": 3,
+    "price": 100000,
+    "id": 1
+  },
+  {
+    "nbRooms": 4,
+    "surface": 12,
+    "nbWindows": 3,
+    "price": 100000,
+    "id": 2
+  },
+  {
+    "nbRooms": 4,
+    "surface": 15,
+    "nbWindows": 3,
+    "price": 100000,
+    "id": 3
+  },
+  {
+    "nbRooms": 4,
+    "surface": "15",
+    "nbWindows": "2",
+    "price": 100000,
+    "id": 1725972975351
+  },
+  {
+    "id": 1726947958291,
+    "nbRooms": 4,
+    "surface": 20,
+    "nbWindows": 3,
+    "price": 100000
+  },
+  {
+    "id": 1726947960049,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726947962006,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726947999712,
+    "nbRooms": "7777",
+    "surface": 20,
+    "nbWindows": 3,
+    "price": 100000
+  },
+  {
+    "id": 1726948003998,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726948004354,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726948004538,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726948004713,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726950382043,
+    "nbRooms": 4,
+    "surface": 20,
+    "nbWindows": 3,
+    "price": 100000
+  },
+  {
+    "id": 1726950382767,
+    "nbRooms": 0,
+    "surface": 0,
+    "nbWindows": 0,
+    "price": 0
+  },
+  {
+    "id": 1726950392549,
+    "nbRooms": "12321",
+    "surface": 20,
+    "nbWindows": 3,
+    "price": 100000
+  }
+]
